@@ -47,3 +47,28 @@ INSERT INTO `Class_Definition` (`Class_ID`, `Class_Name`, `Gender`, `Age_From`, 
 (6, 'Master Women', 'Female', 50, 120),
 (7, 'Open Men', 'Male', 18, 120),
 (8, 'Open Women', 'Female', 18, 120);
+
+-- ------------------------------------------------------
+-- Championship
+-- ------------------------------------------------------
+INSERT INTO `Championship` (`Champ_ID`, `Champ_Name`) VALUES
+(1, 'Championship 001'),
+(2, 'Championship 002'),
+(3, 'Championship 003'),
+(4, 'Championship 004'),
+(5, 'Championship 005'),
+(6, 'Championship 006'),
+(7, 'Championship 007'),
+(8, 'Championship 008'),
+(9, 'Championship 009'),
+(10, 'Championship 010'),
+(11, 'Championship 011'),
+(12, 'Championship 012'),
+(13, 'Championship 013'),
+(14, 'Championship 014'),
+(15, 'Championship 015'),
+(16, 'Championship 016'),
+(17, 'Championship 017'),
+(18, 'Championship 018'),
+(19, 'Championship 019'),
+(20, 'Championship 020');
