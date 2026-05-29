@@ -10,7 +10,11 @@ export default async function Home() {
   return (
     <div className="w-full max-w-lg mx-auto p-6 flex flex-col gap-8">
       {/* Start new score */}
-      <Button asChild size="lg" className="w-full">
+      <Button
+        asChild
+        size="lg"
+        className="group relative isolate w-full overflow-hidden ring-1 ring-primary before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-md before:bg-gradient-to-b before:from-primary-foreground/20 before:opacity-80 after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-md after:bg-gradient-to-b after:from-primary-foreground/10 after:to-transparent after:mix-blend-overlay"
+      >
         <Link href="/score/new">+ Start New Score</Link>
       </Button>
 

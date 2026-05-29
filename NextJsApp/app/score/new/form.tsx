@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import {
   Select,
   SelectContent,
@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Competition, Archer, Equipment } from "@/lib/types";
 import { useRouter } from "next/navigation"
 import { createScore } from "@/app/actions/scores"
+import { Spinner } from "@/components/ui/spinner"
 
 interface Props {
   competitions: Competition[];
@@ -24,6 +25,7 @@ export default function NewScoreForm({ competitions, archers, equipment }: Props
   const [compId, setCompId] = useState<string>("");
   const [archerId, setArcherId] = useState<string>("");
   const [equipmentId, setEquipmentId] = useState<string>("");
+  const [isPending, startTransition] = useTransition()
 
   const selectedComp = competitions.find((c) => String(c.Comp_ID) === compId);
   const selectedArcher = archers.find((a) => String(a.Archer_ID) === archerId);
@@ -37,13 +39,11 @@ export default function NewScoreForm({ competitions, archers, equipment }: Props
   }
 
   async function handleDone() {
-    if (!compId || !archerId || !equipmentId) return;
-    const score = await createScore(
-      Number(archerId),
-      Number(compId),
-      Number(equipmentId)
-    )
-    router.push(`/score/${score.Score_ID}`)
+    if (!compId || !archerId || !equipmentId) return
+    startTransition(async () => {
+      const score = await createScore(Number(archerId), Number(compId), Number(equipmentId))
+      router.push(`/score/${score.Score_ID}`)
+    })
   }
 
   return (
@@ -107,9 +107,9 @@ export default function NewScoreForm({ competitions, archers, equipment }: Props
         </div>
       )}
 
-      <Button onClick={handleDone} disabled={!compId || !archerId || !equipmentId}>
-        Done
-      </Button>
+        <Button onClick={handleDone} disabled={!compId || !archerId || !equipmentId || isPending}>
+        {isPending ? <Spinner /> : "Done"}
+        </Button>
     </div>
   )
 }
