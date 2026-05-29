@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { getRecentScores } from "@/app/actions/scores"
 import { RecentScore } from "@/lib/types"
 import { ChevronRight } from "lucide-react"
+import { formatDateAU } from "@/lib/utils"
 
 export default async function Home() {
   const recentScores = await getRecentScores() as RecentScore[]
@@ -43,7 +44,7 @@ export default async function Home() {
                 <div className="text-right">
                   <p className="font-bold">{score.Total}</p>
                   <p className="text-xs text-muted-foreground">
-                    {new Date(score.Score_Date).toLocaleDateString()}
+                    {formatDateAU(score.Score_Date)}
                   </p>
                 </div>
                 <ChevronRight className="w-4 h-4 text-muted-foreground" />
