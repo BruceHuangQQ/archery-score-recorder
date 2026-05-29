@@ -9,7 +9,7 @@ export default function Header() {
       <h1 className="font-bold text-lg">Archery Score Recorder</h1>
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="icon" asChild>
-          <Link href="https://github.com" target="_blank">
+          <Link href="https://github.com/BruceHuangQQ/archery-score-recorder" target="_blank">
             <Github className="w-5 h-5" />
           </Link>
         </Button>
