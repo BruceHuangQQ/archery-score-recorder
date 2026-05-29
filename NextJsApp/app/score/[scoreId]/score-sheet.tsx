@@ -8,6 +8,7 @@ import { RangeDefinition, ScoreDetail } from "@/lib/types"
 import { useRouter } from "next/navigation"
 import { createEnd, submitArrows } from "@/app/actions/ends"
 import { completeScore } from "@/app/actions/scores"
+import { Spinner } from "@/components/ui/spinner"
 
 interface EndRow {
   rangeId: number
@@ -166,7 +167,7 @@ export default function ScoreSheet({ score, ranges }: Props) {
       {/* Finish button */}
       {allDone && (
         <Button onClick={handleFinish} disabled={saving} className="mt-2">
-            {saving ? "Saving..." : "Finish"}
+            {saving ? <Spinner /> : "Finish"}
         </Button>
         )}
 
