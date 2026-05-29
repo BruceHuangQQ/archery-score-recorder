@@ -61,3 +61,27 @@ export async function getScoreResult(scoreId: number) {
     `
     return rows as EndResult[]
 }
+
+export async function getRecentScores() {
+    const rows = await sql`
+      SELECT 
+        s."Score_ID",
+        s."Score_Date",
+        s."Status",
+        a."Name" as "Archer_Name",
+        r."Round_Name",
+        e."Equipment_Name",
+        COALESCE(SUM(ar."Arrow_Score"), 0) as "Total"
+      FROM "Score" s
+      JOIN "Archer" a ON s."Archer_ID" = a."Archer_ID"
+      JOIN "Competition" c ON s."Comp_ID" = c."Comp_ID"
+      JOIN "Round_Definition" r ON c."Round_ID" = r."Round_ID"
+      JOIN "Equipment_Definition" e ON s."Equipment_ID" = e."Equipment_ID"
+      LEFT JOIN "End_Result" er ON er."Score_ID" = s."Score_ID"
+      LEFT JOIN "Arrow" ar ON ar."End_ID" = er."End_ID"
+      GROUP BY s."Score_ID", a."Name", r."Round_Name", e."Equipment_Name"
+      ORDER BY s."Score_Date" DESC
+      LIMIT 5
+    `
+    return rows
+}

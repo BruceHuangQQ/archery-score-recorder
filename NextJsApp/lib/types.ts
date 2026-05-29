@@ -56,3 +56,13 @@ export interface Competition {
     Size_cm: number
     arrows: number[]
   }
+
+  export interface RecentScore {
+    Score_ID: number
+    Score_Date: string
+    Status: string
+    Archer_Name: string
+    Round_Name: string
+    Equipment_Name: string
+    Total: number
+  }

@@ -1,114 +1,53 @@
-// "use client";
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { getRecentScores } from "@/app/actions/scores"
+import { RecentScore } from "@/lib/types"
+import { ChevronRight } from "lucide-react"
 
-// import { Checkbox } from "@/components/ui/checkbox";
-// import { data, User } from "@/lib/data";
-// import {
-//   createColumnHelper
-// } from "@tanstack/react-table";
+export default async function Home() {
+  const recentScores = await getRecentScores() as RecentScore[]
 
-// import DefaultHeader from "@/components/default-header";
-import { ModeToggle } from "@/components/theme-mode-toggle";
-import { getRounds } from "./actions/rounds";
-import { getArchers } from "./actions/archers";
-import { getCompetitions } from "./actions/competitions";
-// import { Button } from "@/components/ui/button";
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuLabel,
-//   DropdownMenuSeparator,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
-// import { MoreVertical } from "lucide-react";
-// import { DataTable } from "@/components/data-table";
-
-// const columnHelper = createColumnHelper<User>();
-
-// const columns = [
-//   columnHelper.display({
-//     id: "action",
-//     header: ({ table }) => (
-//       <Checkbox
-//         checked={
-//           table.getIsAllPageRowsSelected() ||
-//           (table.getIsSomePageRowsSelected() && "indeterminate")
-//         }
-//         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-//         aria-label="Select all"
-//       />
-//     ),
-//     cell: ({ row }) => (
-//       <Checkbox
-//         checked={row.getIsSelected()}
-//         onCheckedChange={(value) => row.toggleSelected(!!value)}
-//         aria-label="Select row"
-//       />
-//     ),
-//     enableSorting: false,
-//     enableHiding: false,
-//   }),
-//   columnHelper.accessor("firstName", {
-//     header: (info) => <DefaultHeader info={info} name="First Name" />,
-//     cell: (info) => info.getValue(),
-//   }),
-//   columnHelper.accessor("lastName", {
-//     header: (info) => <DefaultHeader info={info} name="Last Name" />,
-//     cell: (info) => info.getValue(),
-//   }),
-//   columnHelper.accessor("email", {
-//     header: (info) => <DefaultHeader info={info} name="Email" />,
-//     cell: (info) => info.getValue(),
-//   }),
-//   columnHelper.accessor("age", {
-//     header: (info) => <DefaultHeader info={info} name="Age" />,
-//     cell: (info) => info.getValue(),
-//   }),
-//   columnHelper.accessor("comments", {
-//     header: (info) => <DefaultHeader info={info} name="Comments" />,
-//     cell: (info) => info.getValue(),
-//   }),
-//   columnHelper.display({
-//     id: "more",
-//     cell: () => {
-//       return (
-//         <DropdownMenu>
-//           <DropdownMenuTrigger asChild>
-//             <Button variant={"ghost"} className="h-8 w-8">
-//               <MoreVertical className="w-4 h-4" />
-//             </Button>
-//           </DropdownMenuTrigger>
-//           <DropdownMenuContent
-//             align="end"
-//             className=""
-//             onCloseAutoFocus={(e) => e.preventDefault()}
-//           >
-//             <DropdownMenuLabel className="">Actions</DropdownMenuLabel>
-//             <DropdownMenuSeparator />
-//             <DropdownMenuItem className="">Copy</DropdownMenuItem>
-//             <DropdownMenuItem>Paste</DropdownMenuItem>
-//             <DropdownMenuItem>Cut</DropdownMenuItem>
-//           </DropdownMenuContent>
-//         </DropdownMenu>
-//       );
-//     },
-//     enableSorting: false,
-//     enableHiding: false,
-//   }),
-// ];
-
-const rounds = await getRounds();
-const competitions = await getCompetitions()
-const archers = await getArchers()
-
-export default function Home() {
   return (
-    <div className="w-full h-full flex flex-col justify-center items-start p-10 gap-4">
-      <ModeToggle />
-      {/* <DataTable<User, any> columns={columns} data={data} /> */}
-      <pre>{JSON.stringify(competitions, null, 2)}</pre>
-      <pre>{JSON.stringify(archers, null, 2)}</pre>
-    </div>
-  );
-}
+    <div className="w-full max-w-lg mx-auto p-6 flex flex-col gap-8">
+      {/* Start new score */}
+      <Button asChild size="lg" className="w-full">
+        <Link href="/score/new">+ Start New Score</Link>
+      </Button>
 
+      {/* Recent scores */}
+      <div>
+        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+          Recent Scores
+        </h2>
+        <div className="flex flex-col gap-2">
+          {recentScores.length === 0 && (
+            <p className="text-sm text-muted-foreground">No scores recorded yet.</p>
+          )}
+          {recentScores.map((score) => (
+            <Link
+              key={score.Score_ID}
+              href={`/score/${score.Score_ID}/result`}
+              className="flex items-center justify-between border rounded-lg px-4 py-3 hover:bg-muted transition-colors"
+            >
+              <div>
+                <p className="font-medium text-sm">{score.Archer_Name}</p>
+                <p className="text-xs text-muted-foreground">
+                  {score.Round_Name} · {score.Equipment_Name}
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="text-right">
+                  <p className="font-bold">{score.Total}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {new Date(score.Score_Date).toLocaleDateString()}
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-muted-foreground" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
