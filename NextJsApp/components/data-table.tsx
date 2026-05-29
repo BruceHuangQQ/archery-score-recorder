@@ -1,105 +1,105 @@
-"use client";
+// "use client";
 
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  SortingState,
-  useReactTable,
-} from "@tanstack/react-table";
+// import {
+//   ColumnDef,
+//   flexRender,
+//   getCoreRowModel,
+//   getSortedRowModel,
+//   SortingState,
+//   useReactTable,
+// } from "@tanstack/react-table";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useState } from "react";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
+// import { useState } from "react";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-}
+// interface DataTableProps<TData, TValue> {
+//   columns: ColumnDef<TData, TValue>[];
+//   data: TData[];
+// }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = useState({});
-  const [sorting, setSorting] = useState<SortingState>([]);
+// export function DataTable<TData, TValue>({
+//   columns,
+//   data,
+// }: DataTableProps<TData, TValue>) {
+//   const [rowSelection, setRowSelection] = useState({});
+//   const [sorting, setSorting] = useState<SortingState>([]);
 
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    onRowSelectionChange: setRowSelection,
-    onSortingChange: setSorting,
-    state: {
-      rowSelection,
-      sorting,
-    },
-  });
+//   const table = useReactTable({
+//     data,
+//     columns,
+//     getCoreRowModel: getCoreRowModel(),
+//     getSortedRowModel: getSortedRowModel(),
+//     onRowSelectionChange: setRowSelection,
+//     onSortingChange: setSorting,
+//     state: {
+//       rowSelection,
+//       sorting,
+//     },
+//   });
 
-  return (
-    <div className="w-full h-[800px] flex flex-col gap-4">
-      <div className="rounded-md border flex flex-2/3 flex-col overflow-hidden">
-        <Table>
-          <TableHeader className="sticky top-0 z-10 bg-background shadow-md">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody className="flex-1 overflow-auto">
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} suppressHydrationWarning>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      <div className="flex-1 text-sm text-muted-foregroundd">
-        {table.getSelectedRowModel().rows.length} of{" "}
-        {table.getFilteredRowModel().rows.length} rows slected
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div className="w-full h-[800px] flex flex-col gap-4">
+//       <div className="rounded-md border flex flex-2/3 flex-col overflow-hidden">
+//         <Table>
+//           <TableHeader className="sticky top-0 z-10 bg-background shadow-md">
+//             {table.getHeaderGroups().map((headerGroup) => (
+//               <TableRow key={headerGroup.id}>
+//                 {headerGroup.headers.map((header) => {
+//                   return (
+//                     <TableHead key={header.id}>
+//                       {header.isPlaceholder
+//                         ? null
+//                         : flexRender(
+//                             header.column.columnDef.header,
+//                             header.getContext()
+//                           )}
+//                     </TableHead>
+//                   );
+//                 })}
+//               </TableRow>
+//             ))}
+//           </TableHeader>
+//           <TableBody className="flex-1 overflow-auto">
+//             {table.getRowModel().rows?.length ? (
+//               table.getRowModel().rows.map((row) => (
+//                 <TableRow
+//                   key={row.id}
+//                   data-state={row.getIsSelected() && "selected"}
+//                 >
+//                   {row.getVisibleCells().map((cell) => (
+//                     <TableCell key={cell.id} suppressHydrationWarning>
+//                       {flexRender(
+//                         cell.column.columnDef.cell,
+//                         cell.getContext()
+//                       )}
+//                     </TableCell>
+//                   ))}
+//                 </TableRow>
+//               ))
+//             ) : (
+//               <TableRow>
+//                 <TableCell
+//                   colSpan={columns.length}
+//                   className="h-24 text-center"
+//                 >
+//                   No results.
+//                 </TableCell>
+//               </TableRow>
+//             )}
+//           </TableBody>
+//         </Table>
+//       </div>
+//       <div className="flex-1 text-sm text-muted-foregroundd">
+//         {table.getSelectedRowModel().rows.length} of{" "}
+//         {table.getFilteredRowModel().rows.length} rows slected
+//       </div>
+//     </div>
+//   );
+// }
