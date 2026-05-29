@@ -1,5 +1,6 @@
 import { ModeToggle } from "@/components/theme-mode-toggle"
 import { Github, Home } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -7,6 +8,13 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b px-6 py-3 flex items-center justify-between bg-background">
       <div className="flex items-center gap-2">
+        <Image
+          src="/arrow-mc.png"
+          alt=""
+          width={24}
+          height={24}
+          className="[image-rendering:pixelated]"
+        />
         <h1 className="font-bold text-lg">Archery Score Recorder</h1>
         <Button variant="ghost" size="icon" asChild>
           <Link href="/" aria-label="Home">
