@@ -10,7 +10,7 @@ export async function createScore(
 ): Promise<Score> {
   const rows = await sql`
     INSERT INTO "Score" ("Archer_ID", "Comp_ID", "Equipment_ID", "Score_Date", "Status")
-    VALUES (${archerId}, ${compId}, ${equipmentId}, CURRENT_DATE, 'in_progress')
+    VALUES (${archerId}, ${compId}, ${equipmentId}, CURRENT_DATE, 'Pending')
     RETURNING *
   `
   return rows[0] as Score
@@ -37,7 +37,7 @@ export async function getScore(scoreId: number) {
 
 export async function completeScore(scoreId: number) {
     await sql`
-      UPDATE "Score" SET "Status" = 'completed'
+      UPDATE "Score" SET "Status" = 'Completed'
       WHERE "Score_ID" = ${scoreId}
     `
 }
